@@ -37,18 +37,24 @@ export const getToyByName = async (name: string) => {
 
 // Crear un juguete nuevo
 export const createToy = async (toy: any) => {
-  const res = await apiClient.post("/Toys/createToy", toy);
+  const res = await apiClient.post("/Toys/createToy", toy, {
+    headers: { "Content-Type": "application/json" },
+  });
   return res.data;
 };
 
-// src/api/toyService.ts
+// ✅ Actualizar un juguete existente (ajustado a tu API)
 export const updateToy = async (toy: any) => {
   const res = await apiClient.put("/Toys/updateToy", toy, {
     headers: { "Content-Type": "application/json" },
   });
   return res.data;
 };
+
 // Eliminar un juguete por ID
 export const deleteToyById = async (id: number) => {
-  await apiClient.delete(`/Toys/deleteToyById?id=${id}`);
+  const res = await apiClient.delete("/Toys/deleteToyById", {
+    params: { id }, // ✅ tu API espera el ID como query param
+  });
+  return res.data;
 };

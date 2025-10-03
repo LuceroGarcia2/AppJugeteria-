@@ -16,7 +16,7 @@ export default function UpdateToyScreen({ route, navigation }: any) {
 
   const [name, setName] = useState(toy.name);
   const [price, setPrice] = useState(String(toy.price));
-  const [categoryName, setCategoryName] = useState(toy.categoryName || "");
+  const [categoryId, setCategoryId] = useState(String(toy.categoryId || ""));
 
   const handleUpdate = async () => {
     try {
@@ -24,13 +24,12 @@ export default function UpdateToyScreen({ route, navigation }: any) {
         id: toy.id,
         name,
         price: parseFloat(price),
-        categoryName,
+        categoryId: Number(categoryId), // ✅ enviar categoryId numérico
       };
 
-      // 👇 Logs para depuración
-      console.log("🟢 Intentando actualizar...");
-      console.log("URL →", `/Toys/updateToy/${updatedToy.id}`);
-      console.log("Payload →", updatedToy);
+      console.log("🟢 Intentando actualizar juguete...");
+      console.log("➡️ URL:", `/Toys/${updatedToy.id}`);
+      console.log("📦 Payload:", updatedToy);
 
       await updateToy(updatedToy);
 
@@ -55,11 +54,12 @@ export default function UpdateToyScreen({ route, navigation }: any) {
         keyboardType="numeric"
       />
 
-      <Text style={styles.label}>Categoría</Text>
+      <Text style={styles.label}>Categoría (Id)</Text>
       <TextInput
         style={styles.input}
-        value={categoryName}
-        onChangeText={setCategoryName}
+        value={categoryId}
+        onChangeText={setCategoryId}
+        keyboardType="numeric"
       />
 
       <Button title="Actualizar" onPress={handleUpdate} />
